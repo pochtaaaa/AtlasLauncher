@@ -1,2 +1,2 @@
-# AtlasLauncher
-A customized Minecraft launcher based on Prism Launcher
+Atlas Launcher is a heavily modified fork/derivative of Prism Launcher.
+Atlas retains portions of Prism Launcher’s codebase while providing a redesigned interface, customization system and community extension platform.

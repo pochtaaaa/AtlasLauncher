@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Launcher</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+                <div class="logo-text">Atlas</div>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item active" data-page="play"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span>Играть</span></a>
+                <a href="#" class="nav-item" data-page="versions"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span><span>Версии</span></a>
+                <a href="#" class="nav-item" data-page="settings"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>Настройки</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="active-downloads" id="activeDownloads" style="display:none">
+                    <label>⬇ Загрузки</label>
+                    <div class="download-list" id="downloadList"></div>
+                </div>
+                <div class="mirror-selector">
+                    <label>🌐 Зеркало</label>
+                    <select id="mirrorSelect" onchange="changeMirror()">
+                        <option value="auto">⚡ Авто (быстрейшее)</option>
+                        <option value="bmclapi">BMCLAPI</option>
+                        <option value="mcbbs">MCBBS</option>
+                        <option value="mojang">Mojang</option>
+                    </select>
+                    <span class="mirror-active-hint" id="mirrorActiveHint"></span>
+                </div>
+                <div class="java-info" id="javaInfo"><div class="java-dot"></div><span>Поиск Java...</span></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="header">
+                <h1 id="pageTitle">Играть</h1>
+                <div class="user-badge">
+                    <div class="user-avatar" id="userAvatar">P</div>
+                    <div class="user-info"><span id="userName">Player</span><span class="user-status">Офлайн</span></div>
+                </div>
+            </header>
+
+            <!-- Play Page -->
+            <div class="page active" id="page-play">
+                <div class="play-hero">
+                    <div class="play-bg-glow"></div>
+                    <div class="play-content">
+                        <div class="play-badge">🎮 Готов к игре</div>
+                        <h2>Atlas Launcher</h2>
+                        <p>Выбери версию и отправляйся в мир Minecraft</p>
+                        <div class="play-controls">
+                            <div class="input-row">
+                                <div class="input-group"><label>Никнейм</label><input type="text" id="usernameInput" value="Player" placeholder="Введи ник" maxlength="16"></div>
+                                <div class="input-group"><label>Версия</label><select id="versionSelect"><option value="">Загрузка...</option></select></div>
+                                <div class="input-group ram-group"><label>RAM</label><div class="ram-input"><input type="range" id="ramSlider" min="512" max="8192" step="512" value="2048" oninput="updateRamDisplay()"><span id="ramDisplay">2048 МБ</span></div></div>
+                            </div>
+                        </div>
+                        <button class="btn-launch" id="launchBtn" onclick="launchGame()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>ЗАПУСТИТЬ MINECRAFT</span></button>
+                        <div class="launch-status" id="launchStatus"></div>
+                    </div>
+                </div>
+                <div class="quick-stats">
+                    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="statVersions">0</div><div class="stat-label">Версий доступно</div></div>
+                    <div class="stat-card"><div class="stat-icon">💾</div><div class="stat-value" id="statInstalled">0</div><div class="stat-label">Установлено</div></div>
+                    <div class="stat-card"><div class="stat-icon">☕</div><div class="stat-value" id="statJava">—</div><div class="stat-label">Java</div></div>
+                </div>
+            </div>
+
+            <!-- Versions Page -->
+            <div class="page" id="page-versions">
+                <div class="versions-header">
+                    <div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="versionSearch" placeholder="Поиск версии..." oninput="filterVersions()"></div>
+                    <button class="btn-refresh" onclick="loadVersions()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Обновить</button>
+                </div>
+                <div class="versions-tabs">
+                    <button class="tab-btn active" onclick="switchTab('all')">Все</button>
+                    <button class="tab-btn" onclick="switchTab('release')">Релизы</button>
+                    <button class="tab-btn" onclick="switchTab('snapshot')">Снапшоты</button>
+                    <button class="tab-btn" onclick="switchTab('old')">Старые</button>
+                    <button class="tab-btn" onclick="switchTab('installed')">Установленные</button>
+                </div>
+                <div class="versions-list" id="versionsList"><div class="loading"><div class="spinner"></div><span>Загрузка версий...</span></div></div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page" id="page-settings">
+                <div class="settings-grid">
+                    <div class="setting-card"><div class="setting-icon">📁</div><h3>Игровая директория</h3><p class="setting-path" id="gameDirPath">~/.atlas_launcher</p><p class="setting-hint">Все версии, моды и миры хранятся здесь</p></div>
+                    <div class="setting-card"><div class="setting-icon">☕</div><h3>Java Runtime</h3><div id="javaSettingsContent"><p>Загрузка...</p></div><button class="btn-secondary btn-rescan-java" onclick="rescanJava()">🔄 Найти заново</button></div>
+                    <div class="setting-card"><div class="setting-icon">👁</div><h3>Отображение версий</h3><p class="setting-hint">Настройте, какие типы версий показывать</p><div class="checkbox-group"><label class="checkbox-label"><input type="checkbox" id="showSnapshots" onchange="saveVersionFilters()"><span class="checkmark"></span><span>Показывать снапшоты</span></label><label class="checkbox-label"><input type="checkbox" id="showOldVersions" onchange="saveVersionFilters()"><span class="checkmark"></span><span>Показывать Alpha / Beta</span></label></div></div>
+                    <div class="setting-card warning"><div class="setting-icon">🧹</div><h3>Очистка кэша</h3><p>Удалить все загруженные библиотеки и ассеты. Версии останутся.</p><button class="btn-danger" onclick="clearCache()">Очистить кэш</button></div>
+                    <div class="setting-card"><div class="setting-icon">🌐</div><h3>Статус зеркал</h3><p class="setting-hint" id="mirrorModeHint">Режим: авто-выбор самого быстрого</p><div class="mirror-status-list" id="mirrorStatusList"><div class="mirror-status-item"><span class="mirror-name">BMCLAPI</span><span class="mirror-state checking">Проверка...</span></div><div class="mirror-status-item"><span class="mirror-name">MCBBS</span><span class="mirror-state checking">Проверка...</span></div><div class="mirror-status-item"><span class="mirror-name">Mojang</span><span class="mirror-state checking">Проверка...</span></div></div><button class="btn-secondary btn-rescan-java" onclick="recheckMirrors(event)">🔄 Перепроверить</button></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Version Settings Drawer (справа) -->
+        <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+        <aside class="drawer" id="versionDrawer">
+            <div class="drawer-header">
+                <h2 id="drawerVersionName">Версия</h2>
+                <button class="drawer-close" onclick="closeDrawer()">✕</button>
+            </div>
+            <div class="drawer-content">
+                <!-- Тема -->
+                <div class="drawer-section">
+                    <h3>🎨 Тема плитки</h3>
+                    <div class="theme-grid" id="themeGrid"></div>
+                </div>
+
+                <!-- Java -->
+                <div class="drawer-section">
+                    <h3>☕ Java</h3>
+                    <select id="drawerJavaSelect" onchange="saveDrawerSetting('custom_java_path', this.value)">
+                        <option value="">Авто (по умолчанию)</option>
+                    </select>
+                    <p class="drawer-hint">Выбери конкретную Java или оставь авто</p>
+                </div>
+
+                <!-- RAM -->
+                <div class="drawer-section">
+                    <h3>💾 Оперативная память</h3>
+                    <div class="ram-input drawer-ram">
+                        <input type="range" id="drawerRamSlider" min="512" max="16384" step="512" value="2048" oninput="updateDrawerRamDisplay(); saveDrawerSetting('ram', parseInt(this.value))">
+                        <span id="drawerRamDisplay">2048 МБ</span>
+                    </div>
+                </div>
+
+                <!-- Загрузчик модов -->
+                <div class="drawer-section">
+                    <h3>⚙️ Загрузчик модов</h3>
+                    <div class="loader-status" id="loaderStatus">
+                        <span class="loader-badge" id="loaderBadge">Vanilla</span>
+                        <button class="btn-small btn-delete" id="loaderUninstallBtn" onclick="uninstallLoader()" style="display:none">Удалить</button>
+                    </div>
+                    <div class="loader-tiles" id="loaderTiles">
+                        <div class="loader-tile" data-loader="fabric" onclick="selectLoaderType('fabric')">
+                            <div class="loader-tile-icon loader-icon-fabric">🧵</div>
+                            <span class="loader-tile-name">Fabric</span>
+                            <span class="loader-tile-count" id="countFabric">…</span>
+                            <span class="loader-tile-installed-dot" title="Установлен"></span>
+                        </div>
+                        <div class="loader-tile" data-loader="forge" onclick="selectLoaderType('forge')">
+                            <div class="loader-tile-icon loader-icon-forge">🔨</div>
+                            <span class="loader-tile-name">Forge</span>
+                            <span class="loader-tile-count" id="countForge">…</span>
+                            <span class="loader-tile-installed-dot" title="Установлен"></span>
+                        </div>
+                        <div class="loader-tile" data-loader="neoforge" onclick="selectLoaderType('neoforge')">
+                            <div class="loader-tile-icon loader-icon-neoforge">🔥</div>
+                            <span class="loader-tile-name">NeoForge</span>
+                            <span class="loader-tile-count" id="countNeoforge">…</span>
+                            <span class="loader-tile-installed-dot" title="Установлен"></span>
+                        </div>
+                        <div class="loader-tile" data-loader="quilt" onclick="selectLoaderType('quilt')">
+                            <div class="loader-tile-icon loader-icon-quilt">🧶</div>
+                            <span class="loader-tile-name">Quilt</span>
+                            <span class="loader-tile-count" id="countQuilt">…</span>
+                            <span class="loader-tile-installed-dot" title="Установлен"></span>
+                        </div>
+                    </div>
+
+                    <div class="loader-versions" id="loaderVersions" style="display:none">
+                        <div class="loader-versions-header">
+                            <button class="loader-back-btn" onclick="closeLoaderVersions()">← Назад</button>
+                            <span class="loader-versions-title" id="loaderVersionsTitle"></span>
+                        </div>
+                        <div class="loader-version-list" id="loaderVersionList"></div>
+                        <button class="btn-small loader-install-btn" id="installLoaderBtn" onclick="installLoader()" disabled>Установить</button>
+                    </div>
+
+                    <div class="loader-progress" id="loaderProgress" style="display:none">
+                        <div class="loader-progress-track"><div class="loader-progress-bar" id="loaderProgressBar"></div></div>
+                        <span id="loaderProgressText">Скачивание...</span>
+                    </div>
+                    <p class="drawer-hint" id="loaderHint">Выбери загрузчик модов, затем версию из списка. Звездой отмечена рекомендуемая версия.</p>
+                </div>
+
+                <!-- Моды -->
+                <div class="drawer-section">
+                    <h3>🧩 Моды</h3>
+                    <div class="mod-dropzone" id="modDropzone" onclick="pickMods()" ondrop="handleModDropVisual(event)" ondragover="handleModDragOver(event)" ondragleave="handleModDragLeave(event)">
+                        <div class="mod-dropzone-icon">📁</div>
+                        <p>Перетащи .jar моды сюда</p>
+                        <span>или нажми чтобы выбрать файл</span>
+                    </div>
+                    <div class="mod-list" id="modList"></div>
+                </div>
+
+                <!-- Modpack -->
+                <div class="drawer-section">
+                    <h3>📦 Modpack (.mrpack)</h3>
+                    <button class="btn-secondary" onclick="pickMrpack()">⬇ Установить .mrpack</button>
+                    <p class="drawer-hint">Поддерживаются Modrinth modpacks</p>
+                    <div class="mrpack-status" id="mrpackStatus"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
